@@ -1,0 +1,1 @@
+@include('errors.layout', ['code' => 404, 'heading' => 'Halaman tidak ditemukan', 'message' => $exception->getMessage() && 404 === 403 ? $exception->getMessage() : 'Halaman yang Anda cari mungkin telah dipindahkan atau tidak tersedia.'])

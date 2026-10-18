@@ -1,0 +1,1 @@
+@include('errors.layout', ['code' => 419, 'heading' => 'Sesi telah berakhir', 'message' => $exception->getMessage() && 419 === 403 ? $exception->getMessage() : 'Halaman terlalu lama dibiarkan terbuka. Muat ulang halaman lalu kirim kembali formulir Anda.'])

@@ -1,0 +1,1 @@
+@include('errors.layout', ['code' => 429, 'heading' => 'Terlalu banyak permintaan', 'message' => $exception->getMessage() && 429 === 403 ? $exception->getMessage() : 'Anda mengirim terlalu banyak permintaan dalam waktu singkat. Mohon tunggu sekitar satu menit, lalu coba lagi.'])

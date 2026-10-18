@@ -1,0 +1,1 @@
+@include('errors.layout', ['code' => 403, 'heading' => 'Akses ditolak', 'message' => $exception->getMessage() && 403 === 403 ? $exception->getMessage() : 'Anda tidak memiliki izin untuk membuka halaman ini.'])

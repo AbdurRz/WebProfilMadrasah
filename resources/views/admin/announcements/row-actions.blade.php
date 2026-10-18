@@ -1,0 +1,1 @@
+<a href="{{ $item->whatsapp_url }}" target="_blank" rel="noopener" class="rounded-lg px-3 py-1.5 text-xs font-medium text-[#128C7E] hover:bg-emerald-50" data-testid="announcement-whatsapp-{{ $item->id }}">WhatsApp</a>
