@@ -1,0 +1,2 @@
+<?php echo $__env->make('errors.layout', ['code' => 404, 'heading' => 'Halaman tidak ditemukan', 'message' => $exception->getMessage() && 404 === 403 ? $exception->getMessage() : 'Halaman yang Anda cari mungkin telah dipindahkan atau tidak tersedia.'], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php /**PATH E:\Kuliah\PPL\code\laravel\resources\views/errors/404.blade.php ENDPATH**/ ?>

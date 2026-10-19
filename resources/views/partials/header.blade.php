@@ -1,4 +1,6 @@
 @php
+    // Lokasi logo di folder public. Ubah jika file Anda ada di folder lain.
+    $brandLogo = 'images/logo-mtsn1.png';
     $nav = [
         ['Beranda', 'home', []],
         ['Profil', 'profile', [['Profil Madrasah', 'profile'], ['Guru & Tendik', 'teachers'], ['Fasilitas', 'facilities']]],
@@ -29,13 +31,19 @@
 
     <div :class="scrolled ? 'shadow-[0_8px_30px_-12px_rgba(11,60,36,.25)] bg-white/90' : 'bg-white/80'" class="border-b border-stone-line/70 backdrop-blur-xl transition-[background-color,box-shadow] duration-300">
         <div class="container-x flex h-[76px] items-center justify-between gap-4">
-            <a href="{{ route('home') }}" class="group flex items-center gap-3" data-testid="site-logo-link">
-                <span class="relative grid h-11 w-11 place-items-center rounded-xl bg-emerald-brand text-gold transition-transform duration-300 group-hover:rotate-[8deg]">
-                    <svg viewBox="0 0 40 40" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 4 36 20 20 36 4 20Z"/><path d="M20 12 28 20 20 28 12 20Z"/><path d="M12 9c0 4 3.5 6 8 6s8-2 8-6" stroke-linecap="round"/></svg>
+            <a href="{{ route('home') }}" class="group flex items-center gap-3" data-testid="site-logo-link" aria-label="{{ $site['site_name'] ?? 'MTsN 1 Bukittinggi' }}, Kementerian Agama Kota Bukittinggi">
+                <span class="brand-logo">
+                    <img src="{{ asset($brandLogo) }}" alt="" width="44" height="44" class="brand-logo__img">
                 </span>
-                <span class="leading-tight">
-                    <span class="block whitespace-nowrap font-serif text-lg font-semibold text-forest">{{ $site['site_name'] ?? 'MTsN 1 Bukittinggi' }}</span>
-                    <span class="block whitespace-nowrap text-[11px] tracking-wide text-ink/55 xl:hidden 2xl:block">Kementerian Agama Kota Bukittinggi</span>
+                <span class="leading-tight" aria-hidden="true">
+                    <span class="brand-line block whitespace-nowrap font-serif text-lg font-semibold text-forest" data-type="{{ $site['site_name'] ?? 'MTsN 1 Bukittinggi' }}">
+                        <span class="brand-line__ghost">{{ $site['site_name'] ?? 'MTsN 1 Bukittinggi' }}</span>
+                        <span class="brand-line__live"></span>
+                    </span>
+                    <span class="brand-line block whitespace-nowrap text-[11px] tracking-wide text-ink/55 xl:hidden 2xl:block" data-type="Kementerian Agama Kota Bukittinggi">
+                        <span class="brand-line__ghost">Kementerian Agama Kota Bukittinggi</span>
+                        <span class="brand-line__live"></span>
+                    </span>
                 </span>
             </a>
 
@@ -84,3 +92,53 @@
         </div>
     </div>
 </header>
+
+<style>
+    .brand-logo { display: block; width: 2.75rem; height: 2.75rem; perspective: 700px; flex: none; }
+    .brand-logo__img { width: 100%; height: 100%; object-fit: contain; animation: brand-spin 6s ease-in-out infinite; transform-style: preserve-3d; will-change: transform; }
+    @keyframes brand-spin {
+        0%, 25% { transform: rotateY(0deg); }
+        65%, 100% { transform: rotateY(360deg); }
+    }
+    .brand-line { position: relative; }
+    .brand-line__ghost { visibility: hidden; }
+    .brand-line__live { position: absolute; left: 0; top: 0; white-space: nowrap; }
+    .brand-line.is-typing .brand-line__live::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.12em; background: #D4AF37; animation: brand-caret .7s steps(1) infinite; }
+    @keyframes brand-caret { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+        .brand-logo__img { animation: none; }
+        .brand-line__ghost { visibility: visible; }
+        .brand-line__live { display: none; }
+    }
+</style>
+
+<script>
+    (function () {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var lines = Array.prototype.slice.call(document.querySelectorAll('.brand-line[data-type]'));
+        if (!lines.length) return;
+        var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+        async function type(line, text) {
+            var live = line.querySelector('.brand-line__live');
+            line.classList.add('is-typing');
+            for (var i = 1; i <= text.length; i++) { live.textContent = text.slice(0, i); await sleep(70); }
+            line.classList.remove('is-typing');
+        }
+        async function erase(line, text) {
+            var live = line.querySelector('.brand-line__live');
+            line.classList.add('is-typing');
+            for (var i = text.length - 1; i >= 0; i--) { live.textContent = text.slice(0, i); await sleep(30); }
+            line.classList.remove('is-typing');
+        }
+
+        (async function loop() {
+            while (true) {
+                for (var i = 0; i < lines.length; i++) await type(lines[i], lines[i].dataset.type);
+                await sleep(2800);
+                for (var j = lines.length - 1; j >= 0; j--) await erase(lines[j], lines[j].dataset.type);
+                await sleep(600);
+            }
+        })();
+    })();
+</script>

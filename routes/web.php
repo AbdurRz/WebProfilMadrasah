@@ -6,8 +6,19 @@ use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\StudentAffairsController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', HomeController::class)->name('home');
+
+// Serve uploaded media from the "public" disk when the public/storage symlink
+// is unavailable (e.g. Windows dev setups where `storage:link` cannot create
+// symlinks). On servers where the symlink exists, the web server serves
+// /storage/* directly and this route is never reached.
+Route::get('/storage/{path}', function (string $path) {
+    abort_unless(Storage::disk('public')->exists($path), 404);
+
+    return Storage::disk('public')->response($path);
+})->where('path', '.*')->name('storage.serve');
 
 Route::controller(PublicController::class)->group(function () {
     Route::get('/profil', 'profile')->name('profile');

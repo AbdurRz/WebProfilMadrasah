@@ -33,7 +33,10 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Do NOT set 'serve' => true here. It registers a `/storage/{path}`
+            // route for this private disk that shadows the route serving public
+            // uploads (see routes/web.php). Private files are served explicitly,
+            // e.g. admin PPDB documents via Admin\PpdbController::document().
             'throw' => false,
             'report' => false,
         ],

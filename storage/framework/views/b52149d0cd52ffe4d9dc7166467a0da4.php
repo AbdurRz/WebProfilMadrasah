@@ -1,0 +1,2 @@
+<a href="<?php echo e($item->whatsapp_url); ?>" target="_blank" rel="noopener" class="rounded-lg px-3 py-1.5 text-xs font-medium text-[#128C7E] hover:bg-emerald-50" data-testid="announcement-whatsapp-<?php echo e($item->id); ?>">WhatsApp</a>
+<?php /**PATH E:\Kuliah\PPL\code\laravel\resources\views/admin/announcements/row-actions.blade.php ENDPATH**/ ?>
