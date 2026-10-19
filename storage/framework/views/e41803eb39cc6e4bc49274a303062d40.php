@@ -36,6 +36,10 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" href="<?php echo e(asset('favicon.ico')); ?>" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('favicon-32.png')); ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(asset('favicon-16.png')); ?>">
+    <link rel="apple-touch-icon" href="<?php echo e(asset('apple-touch-icon.png')); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <title><?php echo $__env->yieldContent('title', 'Dashboard'); ?> — CMS MTsN 1 Bukittinggi</title>

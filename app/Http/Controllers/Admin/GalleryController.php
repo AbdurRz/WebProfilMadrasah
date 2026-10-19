@@ -28,7 +28,7 @@ class GalleryController extends CrudController
             'event_date' => ['label' => 'Tanggal Kegiatan', 'type' => 'date', 'rules' => 'nullable|date'],
             'description' => ['label' => 'Deskripsi', 'type' => 'textarea', 'rules' => 'nullable|string'],
             'cover_image' => ['label' => 'Gambar Sampul', 'type' => 'image', 'rules' => 'nullable|image|max:2048'],
-            'video_url' => ['label' => 'Tautan Video YouTube', 'type' => 'url', 'rules' => 'nullable|url|max:255'],
+            'video_url' => ['label' => 'Video (tautan YouTube atau file .mp4, contoh: videos/profil_madrasah.mp4)', 'type' => 'text', 'rules' => 'nullable|string|max:255'],
             'photos' => ['label' => 'Tambah Foto (bisa banyak)', 'type' => 'images', 'virtual' => true, 'rules' => 'nullable|array|max:20'],
             'photos.*' => ['type' => 'hidden', 'virtual' => true, 'rules' => 'image|max:2048'],
         ];

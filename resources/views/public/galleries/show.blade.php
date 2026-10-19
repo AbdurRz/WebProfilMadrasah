@@ -5,7 +5,14 @@
     <x-page-hero :title="$gallery->title" eyebrow="Galeri" :subtitle="$gallery->description" :crumbs="['Galeri' => route('galleries.index'), $gallery->title => null]" />
 
     <div class="container-x py-16" x-data="{ open: false, src: '', caption: '' }" @keydown.escape.window="open = false">
-        @if ($gallery->youtube_id)
+        @if ($gallery->local_video_url)
+            <div class="mb-12 aspect-video overflow-hidden rounded-2xl bg-forest" data-testid="gallery-video">
+                <video class="h-full w-full" controls playsinline preload="metadata" poster="{{ $gallery->cover_url }}" title="{{ $gallery->title }}">
+                    <source src="{{ $gallery->local_video_url }}" type="video/mp4">
+                    Browser Anda tidak mendukung pemutar video.
+                </video>
+            </div>
+        @elseif ($gallery->youtube_id)
             <div class="mb-12 aspect-video overflow-hidden rounded-2xl bg-forest" data-testid="gallery-video">
                 <iframe class="h-full w-full" src="https://www.youtube.com/embed/{{ $gallery->youtube_id }}" title="{{ $gallery->title }}" allowfullscreen loading="lazy"></iframe>
             </div>

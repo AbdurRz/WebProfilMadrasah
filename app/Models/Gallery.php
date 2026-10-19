@@ -33,4 +33,24 @@ class Gallery extends Model
 
         return $m[1] ?? null;
     }
+
+    /**
+     * URL video lokal (.mp4, .webm, .ogg). Isi video_url dengan path di folder public
+     * (contoh: videos/profil_madrasah.mp4) atau URL lengkap ke file video.
+     */
+    public function getLocalVideoUrlAttribute(): ?string
+    {
+        $path = trim((string) $this->video_url);
+
+        if ($path === '' || ! preg_match('~\.(mp4|webm|ogg)(\?.*)?$~i', $path)) {
+            return null;
+        }
+
+        return str_starts_with($path, 'http') ? $path : asset(ltrim($path, '/'));
+    }
+
+    public function getHasVideoAttribute(): bool
+    {
+        return $this->youtube_id !== null || $this->local_video_url !== null;
+    }
 }
